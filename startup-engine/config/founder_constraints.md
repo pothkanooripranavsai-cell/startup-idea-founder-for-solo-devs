@@ -80,3 +80,19 @@ Interest is not a filter. A candidate is not excluded for being boring or favour
 Prefer mechanisms that are **proven but under-exploited** over mechanisms that are proven and saturated.
 
 This is not a licence to invent. The mechanism must still have evidence behind it. What is sought is a proven way of making money that few solo operators are currently running, not a novel idea nobody has tested.
+
+## SOURCE COMPANY BAND
+
+Mechanisms are reverse-engineered from **real companies with real teams and real revenue**. The band runs from category leaders down to small-but-serious businesses, and medium and smaller companies are explicitly preferred where they qualify, because at that size the mechanism is doing the work rather than accumulated capital, and the early history is recent enough to reconstruct honestly.
+
+**One-person side projects are not acceptable source material.** A solo operator at two or six thousand dollars a month is excluded even where the revenue is genuinely disclosed and independently reported. The disclosure is not the problem; the ceiling is. Runs 02 through 05 leaned on exactly these and it is why the corpus drifted toward candidates with no path beyond modest niche income.
+
+A mechanism sourced from a company with a team must state plainly which parts were carried by the team or the capital and which survive when both are removed. That statement is what `solo_transfer` is scoring. Assuming the whole mechanism transfers because the company was "small" is the error this section exists to prevent.
+
+## AMBITION
+
+Candidates should have a plausible path to something large. Earlier runs produced a corpus of safe, defensible, modest-ceiling niches, and that is not what is wanted.
+
+Prefer mechanisms with **compounding properties** — network effects, data that becomes a moat as it accumulates, distribution that grows without proportional founder effort — over mechanisms whose returns stay linear in hours worked.
+
+Higher risk is acceptable in exchange for a real ceiling. A candidate that might fail outright but could become large is preferred over one that will reliably produce a small, permanently capped income. This does not relax any hard gate: ambition is a preference among candidates that pass, never a reason to pass one that does not.
