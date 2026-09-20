@@ -1,0 +1,30 @@
+# Run outputs — generated candidates, evaluations, verdicts, research trails.
+# Excluded deliberately: the engine is public, the findings are not.
+runs/
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials.json
+secrets.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Editors and OS
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# Claude Code local machine settings
+.claude/settings.local.json
