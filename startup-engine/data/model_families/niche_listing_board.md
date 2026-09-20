@@ -6,6 +6,8 @@ instances: [remoteok, moaijobs]
 company_count: 2
 independent_company_count: 2
 revenue_evidenced_count: 2
+sibling_instances_solo_revenue_evidenced: 6
+sibling_note: Six boards across both payer directions are recorded solo-run with disclosed revenue in ev_016. Only the two with individual company records are counted above.
 differentiating_axes: [niche_definition, seeding_method, price_per_listing, operator_scale, audience_origin]
 typical_validation_capital: Near zero - hosting and tooling only, with one instance reported at approximately 99 percent margin
 typical_scaling_capital: None evidenced. Both instances are solo and unfunded.
@@ -14,7 +16,7 @@ network_required: UNKNOWN - and this is the central open question, since a board
 known_regions: [not_applicable]
 target_market_presence: not_applicable
 known_failures: []
-evidence: [ev_007, ev_008, ev_009]
+evidence: [ev_007, ev_008, ev_009, ev_016]
 ---
 
 # Niche listing board with supply-side per-unit payment
@@ -53,8 +55,18 @@ Expertise and network: both `UNKNOWN`, and the second is the live risk. The mech
 
 ## Open questions
 
-How the first audience is assembled at zero cost and zero standing. Every instance on file had an audience by the time it was earning, and none of the records explain how it got there.
+How the first audience is assembled at zero cost and zero standing. Every instance on file had an audience by the time it was earning, and none of the records explain how it got there. **Still open for this family.**
 
-Whether the niche must be one the operator already belongs to. If so, this mechanism carries a hidden network requirement and Gate 3 bites.
+Whether the niche must be one the operator already belongs to. If so, this mechanism carries a hidden network requirement and Gate 3 bites. **Still open.**
 
-Whether listing supply can be seeded by aggregating publicly posted listings before any buyer pays, and what that means for the value of a paid placement.
+## Resolved in run 04
+
+*Whether listing supply can be seeded by aggregating publicly posted listings before any buyer pays.*
+
+It can, and doing so produces a different mechanism rather than a variant of this one. `ev_017` records an operator assembling the entire corpus by parsing public applicant tracking systems, contacting no supplier, and charging the demand side instead. That is `data/model_families/public_corpus_aggregation.md`, recorded separately because the payer, the cold-start shape, and the network requirement all differ.
+
+The consequence for *this* family is narrow and worth stating plainly: if the inventory can be assembled for free from public sources, the value of a paid placement rests entirely on the audience the board has concentrated, not on the listing being present. That makes the audience precondition sharper here, not softer.
+
+## Scale evidence added in run 04
+
+`ev_016` raises the solo-run, revenue-disclosed count across both payer directions from two to six, from a publisher with no stake in the mechanism succeeding. That is enough to support the `solo_transfer` anchor reserved for mechanisms already demonstrably run by solo operators at zero capital — a claim two instances did not support.
