@@ -50,6 +50,10 @@ DEEP_EXPLORE_AT = 3.5
 FACT_COVERAGE_MIN = 0.5
 UNKNOWN_RATE_MAX = 0.3
 
+# How many claims one underlying source may carry as direct support before the rest
+# fall back to inference. Without a cap, one article can establish a whole candidate.
+MAX_CLAIMS_PER_SOURCE = 2
+
 
 def _scalar(raw: str) -> Any:
     s = raw.strip()
@@ -125,6 +129,72 @@ def derive_banded_gate(value: Any, floor: Any, stretch: Any) -> str:
     if stretch is not None and value <= stretch:
         return "BLOCKED"
     return "FAIL"
+
+
+def underlying_sources(evidence_dir: Path) -> dict[str, str]:
+    """Map evidence id -> underlying_source, so independence is enforced rather than remembered."""
+    out: dict[str, str] = {}
+    if not evidence_dir.is_dir():
+        return out
+    for path in sorted(evidence_dir.glob("ev_*.md")):
+        ident = source = None
+        for line in path.read_text(encoding="utf-8").splitlines():
+            key, _, value = line.partition(":")
+            if key.strip() == "id":
+                ident = value.strip()
+            elif key.strip() == "underlying_source":
+                source = value.strip()
+            elif line.strip() == "---" and ident:
+                break
+        if ident:
+            out[ident] = source or ident
+    return out
+
+
+def parse_claims(raw: list[Any]) -> list[tuple[str, list[str]]]:
+    """Each entry is "<support>: <ev ids or -> | <claim text>"."""
+    claims = []
+    for entry in raw:
+        support, _, rest = str(entry).partition(":")
+        ids_part = rest.partition("|")[0].strip()
+        ids = [i.strip() for i in ids_part.split(",") if i.strip() and i.strip() != "-"]
+        claims.append((support.strip().lower(), ids))
+    return claims
+
+
+def coverage_from_claims(
+    claims: list[tuple[str, list[str]]], sources: dict[str, str]
+) -> tuple[float, float, dict[str, Any]]:
+    """Derive coverage from the claim list, capping how much one underlying source may carry.
+
+    A single article establishing an entire candidate is the failure this prevents. Each
+    distinct underlying source counts toward direct support at most MAX_CLAIMS_PER_SOURCE
+    times; further claims from it fall back to inference.
+    """
+    required = len(claims)
+    unknown = sum(1 for support, _ in claims if support == "unknown")
+
+    used: dict[str, int] = {}
+    direct = uncapped = 0
+    for support, ids in claims:
+        if support != "direct":
+            continue
+        uncapped += 1
+        keys = {sources.get(i, i) for i in ids} or {"unattributed"}
+        key = sorted(keys)[0]
+        if used.get(key, 0) < MAX_CLAIMS_PER_SOURCE:
+            used[key] = used.get(key, 0) + 1
+            direct += 1
+
+    detail = {
+        "required": required,
+        "direct_capped": direct,
+        "direct_uncapped": uncapped,
+        "unknown": unknown,
+        "independent_sources": len(used),
+        "capped_away": uncapped - direct,
+    }
+    return direct / required, unknown / required, detail
 
 
 def coverage_figures(cov: dict[str, Any]) -> tuple[float | None, float | None]:
@@ -241,13 +311,34 @@ def main() -> int:
     if all(v is not None for v in scores.values()):
         total = round(sum(WEIGHTS[d] * scores[d] for d in WEIGHTS), 2)
 
-    fact_coverage, unknown_rate = coverage_figures(dict(ev.get("coverage") or {}))
+    claims = parse_claims(list(ev.get("claims") or []))
+    detail = None
+    if claims:
+        sources = underlying_sources(args.evaluation.parents[2] / "data" / "evidence")
+        fact_coverage, unknown_rate, detail = coverage_from_claims(claims, sources)
+        self_reported = coverage_figures(dict(ev.get("coverage") or {}))[0]
+    else:
+        fact_coverage, unknown_rate = coverage_figures(dict(ev.get("coverage") or {}))
+        self_reported = None
     verdict, reason = decide(gates, scores, total, fact_coverage, unknown_rate)
 
     print(f"idea:            {ev.get('idea')}")
     print(f"weighted total:  {'n/a' if total is None else f'{total:.2f} / 5.00'}")
     print(f"fact coverage:   {'n/a' if fact_coverage is None else f'{fact_coverage:.0%}'}")
     print(f"unknown rate:    {'n/a' if unknown_rate is None else f'{unknown_rate:.0%}'}")
+    if detail:
+        print(
+            f"  derived from:  {detail['required']} claims, "
+            f"{detail['direct_uncapped']} direct across {detail['independent_sources']} "
+            f"independent sources, {detail['capped_away']} capped away"
+        )
+        if self_reported is not None and abs(self_reported - fact_coverage) > 0.005:
+            print(
+                f"! self-reported coverage was {self_reported:.0%}, "
+                f"derived is {fact_coverage:.0%} — the derived figure governs"
+            )
+    else:
+        print("  coverage:      self-reported (no claims list) — not independence-checked")
     print(f"verdict:         {verdict}")
     print(f"because:         {reason}")
     if ev.get("critical_unknown"):
