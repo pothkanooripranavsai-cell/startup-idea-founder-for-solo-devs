@@ -2,19 +2,20 @@
 id: presold_outcome_service
 name: Pre-sold fixed outcome, delivered manually, productised from revenue
 mechanism: Sell a specific named outcome at a flat price before it can be delivered efficiently, deliver it by hand, and use the revenue to automate what recurs
-instances: []
-company_count: 0
-independent_company_count: 0
+instances: [zappos]
+company_count: 1
+independent_company_count: 1
 revenue_evidenced_count: 0
+mechanism_proof_only: true
 differentiating_axes: [outcome_sold, buyer_urgency, manual_delivery_cost, automatable_fraction, recurrence]
-typical_validation_capital: Zero - the first delivery is founder labour against a payment already received
-typical_scaling_capital: None required by the mechanism, since productisation is funded by service revenue
+typical_validation_capital: Zero at the sequencing level the mechanism describes - the one recorded instance did not itself stay zero-capital past the validation phase, see the caution below
+typical_scaling_capital: The recorded instance required outside capital to scale past manual delivery. Untested whether a fully digital, solo version avoids this.
 domain_expertise_required: UNKNOWN - depends entirely on the outcome sold
 network_required: UNKNOWN
 known_regions: [not_applicable]
 target_market_presence: not_applicable
 known_failures: []
-evidence: [ev_010, ev_011]
+evidence: [ev_010, ev_011, ev_023]
 ---
 
 # Pre-sold fixed outcome, delivered manually, productised from revenue
@@ -33,9 +34,11 @@ A second, less obvious property: a failed attempt costs nothing but time. If nob
 
 ## How instances differ
 
-**No instances are recorded.** `company_count` is 0 and `revenue_evidenced_count` is 0, which is the honest state of this family and the reason it must not be treated as equivalently proven to `niche_listing_board`.
+**One instance is recorded, and it is a mechanism proof rather than a transferable business.** Zappos (`ev_023`) is real, famous, and independently well documented — but it is a physical-goods company that needed outside capital to move past its manual-fulfilment phase. `mechanism_proof_only: true` is set deliberately: this record establishes that the *sequencing* (sell, deliver manually, automate from revenue) works at the scale of a 1.2-billion-dollar acquisition. It does not establish that the sequencing stays zero-capital, solo, or online-only past validation, because in its one recorded instance it did not.
 
-What exists is documentation of the practice (`ev_010`, community tier) and one uncorroborated case study recorded as HYPOTHESIS rather than fact (`ev_011`). Named, verifiable operators have not been sourced.
+`revenue_evidenced_count` stays at 0 for that reason. Zappos's revenue does not evidence that *this* founder's constraints are compatible with the mechanism past the first sale — it evidences that the ordering itself is sound.
+
+What else exists is documentation of the practice (`ev_010`, community tier) and one uncorroborated case study recorded as HYPOTHESIS rather than fact (`ev_011`). No solo, zero-capital, online-only operator has been sourced running this mechanism to a sustained, self-funded business.
 
 The axes on which real instances would differ, once found: what outcome is sold, how urgent the buyer's need is, how expensive manual delivery is, what fraction of the work is actually automatable, and whether the outcome recurs or is one-shot.
 
@@ -51,7 +54,7 @@ Network: `UNKNOWN`, and the same first-customer problem applies as everywhere el
 
 ## Open questions
 
-Whether any named, verifiable operator has run this successfully. Until one is sourced, this family is a documented practice rather than a proven mechanism, and every candidate built on it inherits that weakness.
+Whether any named, verifiable operator has run this successfully **while staying solo, zero-capital and online-only past the first sale**. Zappos closes the "does the sequencing work at all" question and leaves this one open — its own answer was capital, not continued bootstrapping.
 
 What fraction of the manual work is genuinely automatable, as opposed to appearing automatable before the work is understood.
 
