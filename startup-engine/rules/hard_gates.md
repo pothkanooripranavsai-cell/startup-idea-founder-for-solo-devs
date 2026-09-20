@@ -121,17 +121,20 @@ This gate is a judgment about access, not a budget comparison. How *difficult* t
 
 `gate_8_self_funding`
 
-Can customer payments fund subsequent development and operations?
+Can the model reach its **first revenue** without capital the founder does not have?
 
-* FAIL if the model requires outside funding to reach or sustain operation.
-* FAIL if it only works at a scale unreachable without capital — a mechanism whose unit economics need volume the founder cannot buy their way to.
-* FAIL if costs arrive structurally ahead of revenue, so that operating the business at all requires a float the founder does not have.
-* BLOCKED if the timing of costs against revenue is unknown.
-* PASS if revenue can plausibly precede and then fund the next increment of cost.
+This gate covers the bootstrap window only — from nothing to the first customer payment. What the business needs after that is not this gate's business.
+
+* FAIL if costs arrive structurally ahead of the first revenue, so that getting started at all requires a float the founder does not have.
+* FAIL if no revenue is reachable at all without a scale that itself requires capital to buy.
+* BLOCKED if the timing of costs against first revenue is unknown.
+* PASS if first revenue can plausibly arrive before, or fund, the cost that follows it.
 
 The question is order, not size. A business with high costs that customers pay for in advance passes. A business with low costs that must all be incurred before anyone pays does not.
 
-Funding raised by the original operators is relevant evidence here. If every known instance of the mechanism required capital to reach viability, that is a reason to FAIL this gate, not a detail to note and move past.
+**What this gate no longer asks.** Whether the mechanism eventually needs capital to grow, and whether its original operators raised money, are no longer reasons to fail or even to caveat. Per `config/founder_constraints.md`, the founder's constraint is solo and self-funded *for the initial days only* — after first revenue, a team and outside investment are both explicitly acceptable. A mechanism that starts from nothing and later takes funding is a normal company, not a failed gate.
+
+This is a deliberate narrowing. The previous version failed a mechanism if "every known instance required capital to reach viability," which marked down Zappos and Levels.fyi for doing the ordinary thing once they had something worth funding.
 
 ## RECORDING
 

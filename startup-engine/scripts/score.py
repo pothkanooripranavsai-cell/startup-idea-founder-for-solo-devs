@@ -25,9 +25,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 # Mirrors rules/scoring_rubric.md.
 WEIGHTS: dict[str, float] = {
     "bootstrap_feasibility": 0.25,
-    "domain_tacit_fit": 0.25,
+    "domain_tacit_fit": 0.15,
     "solo_feasibility": 0.15,
-    "solo_transfer": 0.15,
+    "economic_model": 0.25,
     "validation_accessibility": 0.10,
     "distribution": 0.10,
 }

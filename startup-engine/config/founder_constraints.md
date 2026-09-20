@@ -4,8 +4,11 @@ tooling_subscriptions_allowed: true
 hours_per_week: 20
 hours_per_week_stretch: 30
 team_size: 1
+team_size_scope: validation_only
+team_after_revenue: allowed
 domain_expertise: generalist
-funding_mode: customer_funded
+funding_mode: customer_funded_to_first_revenue
+funding_after_revenue: any_including_external
 delivery: fully_digital
 geography: irrelevant
 ---
@@ -55,7 +58,29 @@ Four conditions, all required:
 1. Validation begins at zero cash.
 2. First customers are acquired before any significant build or spend.
 3. Customer payments fund subsequent development and operations.
-4. No inventory, infrastructure, ad spend, or outside funding.
+4. No inventory, infrastructure, ad spend, or outside funding **before revenue**. See the next section for what changes after.
+
+## THE CONSTRAINT IS THE STARTING LINE ONLY
+
+Stated by the founder as plainly as it can be put: **solo and self-funded for the initial days. That is it.**
+
+**Initial days — binding, no exceptions.** One person. Zero capital. The business must reach its first revenue on the founder's own effort with no money going in, which is what Gate 1 and Gate 5 test.
+
+**After that — open, and not a constraint on anything.** A team, hired when the work justifies it. Spending the business's own money on infrastructure, tooling and advertising. **Raising outside money** — investors, equity, loans — which the founder has confirmed they are fine with. None of it counts against any gate or dimension, and none of it should be raised as a caveat.
+
+Do not extend the starting constraint past the starting line. The engine spent runs 04 to 06 doing exactly that: Zappos was marked down for needing outside investment to grow past manual fulfilment, Levels.fyi for taking institutional money on the way to 48 employees, and mechanisms generally for "needing capital to scale." Every one of those is retired. They were normal companies doing the normal thing once they had something worth funding.
+
+The only question that ever mattered is whether a mechanism can be *started* by one person with nothing. Any evidence or family record still carrying a caveat about later capital or later headcount should be read against this section, and the caveat disregarded.
+
+## VALIDATION TIMELINE
+
+First revenue within roughly **a year** is acceptable. Weeks is not the standard.
+
+The founder is explicit about this: waiting longer is fine in exchange for a bigger outcome, provided the wait is *visibly productive*. What is not acceptable is a year of silence followed by finding out it never worked.
+
+So a candidate on a long horizon must name **specific, checkable interim signals** — what should be observably true at month two, month four, month eight. Contributions accumulating at a stated rate. Usage compounding. A dataset approaching a threshold estimated to unlock revenue.
+
+A candidate that names them earns relief on Bootstrap feasibility and Validation accessibility per `rules/scoring_rubric.md`. A candidate that asks for a year on faith does not.
 
 ## HOURS
 
@@ -85,9 +110,11 @@ This is not a licence to invent. The mechanism must still have evidence behind i
 
 Mechanisms are reverse-engineered from **real companies with real teams and real revenue**. The band runs from category leaders down to small-but-serious businesses, and medium and smaller companies are explicitly preferred where they qualify, because at that size the mechanism is doing the work rather than accumulated capital, and the early history is recent enough to reconstruct honestly.
 
-**One-person side projects are not acceptable source material.** A solo operator at two or six thousand dollars a month is excluded even where the revenue is genuinely disclosed and independently reported. The disclosure is not the problem; the ceiling is. Runs 02 through 05 leaned on exactly these and it is why the corpus drifted toward candidates with no path beyond modest niche income.
+**The exclusion is about ceiling, not headcount.** A solo operator at two or six thousand dollars a month is excluded because the outcome is trivial, not because they were alone. Runs 02 through 05 leaned on exactly these and it is why the corpus drifted toward candidates with no path beyond modest niche income.
 
-A mechanism sourced from a company with a team must state plainly which parts were carried by the team or the capital and which survive when both are removed. That statement is what `solo_transfer` is scoring. Assuming the whole mechanism transfers because the company was "small" is the error this section exists to prevent.
+**Do not spend effort on how many founders a source company had.** One founder or two is close to irrelevant — the same mechanism with the same economics is the same mechanism. Wargraphs (one person, ~€12.3M revenue, sold for ~$54M) and Levels.fyi (two founders, ~48 employees) are both good sources for the same reason: the economics are real and the start was reproducible from nothing.
+
+What a source record must state plainly is which parts of the mechanism were carried by **capital or a pre-existing audience** — the two things this founder genuinely cannot supply — and which survive without them. A team is not on that list, because a team can be hired later out of revenue.
 
 ## AMBITION
 

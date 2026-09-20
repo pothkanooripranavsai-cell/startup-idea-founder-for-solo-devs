@@ -34,7 +34,7 @@ The founder constraints here specify no audience, no reputation, no following, z
 
 Because it will keep presenting itself as a candidate. It is well documented, the numbers are large, the operators are solo, and the businesses are wholly online - it clears every surface test this engine applies and fails on a precondition that is invisible in the source material.
 
-Any candidate proposing a self-launched product must be scored against `ev_019` on the `solo_transfer` dimension, where the 0 anchor reads: the mechanism only works with capital, a team, or an existing audience; strip those and nothing is left.
+Any candidate proposing a self-launched product must be scored against `ev_019` on the `economic_model` dimension, where the 0 anchor reads: the mechanism only works with capital, a team, or an existing audience; strip those and nothing is left.
 
 ## What is not being claimed
 

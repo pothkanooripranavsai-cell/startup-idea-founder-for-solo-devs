@@ -31,7 +31,7 @@ First traffic came from answering questions people were already asking on Blind 
 
 ## Why this is the best-matched source company in the corpus
 
-The founder's constraints for this project are zero capital, twenty hours a week, one person, wholly online, no audience, no standing. Almost every company examined in five prior runs fails at least one of those at its own starting point, which forces `solo_transfer` down and leaves candidates resting on mechanisms proven only under conditions the founder cannot reproduce.
+The founder's constraints for this project are zero capital, twenty hours a week, one person, wholly online, no audience, no standing. Almost every company examined in five prior runs fails at least one of those at its own starting point, which forces `economic_model` down and leaves candidates resting on mechanisms proven only under conditions the founder cannot reproduce.
 
 Levels.fyi's *starting* conditions are reproducible almost exactly. Its *current* state — roughly 48 employees, 3 million monthly visitors — is a real ceiling. It is small enough that the mechanism is visibly doing the work, and large enough that the work clearly went somewhere.
 

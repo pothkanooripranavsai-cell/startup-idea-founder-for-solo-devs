@@ -69,4 +69,4 @@ The consequence for *this* family is narrow and worth stating plainly: if the in
 
 ## Scale evidence added in run 04
 
-`ev_016` raises the solo-run, revenue-disclosed count across both payer directions from two to six, from a publisher with no stake in the mechanism succeeding. That is enough to support the `solo_transfer` anchor reserved for mechanisms already demonstrably run by solo operators at zero capital — a claim two instances did not support.
+`ev_016` raises the solo-run, revenue-disclosed count across both payer directions from two to six, from a publisher with no stake in the mechanism succeeding. That is enough to support the `economic_model` anchor reserved for mechanisms already demonstrably run by solo operators at zero capital — a claim two instances did not support.
