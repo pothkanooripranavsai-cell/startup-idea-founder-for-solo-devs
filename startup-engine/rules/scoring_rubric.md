@@ -158,13 +158,16 @@ A dimension with no resolved evidence is `null`, never a midpoint. Any `null` su
 Computed by `scripts/score.py`, in order. First match wins.
 
 1. Any gate `FAIL` → **REJECT**
-2. Any gate `BLOCKED` → **WATCH** (the blocking gate becomes the critical unknown)
-3. Any dimension `null` → **WATCH**
-4. `total` < 2.5 → **REJECT**
-5. `total` ≥ 3.5 **and** a stated ceiling **and** `fact_coverage` ≥ 0.5 **and** `unknown_rate` ≤ 0.3 → **DEEP_EXPLORE**
-6. Otherwise → **WATCH**
+2. `total` is exactly `0.00` → **REJECT**, naming the zeroed dimension
+3. Any gate `BLOCKED` → **WATCH** (the blocking gate becomes the critical unknown)
+4. Any dimension `null` → **WATCH**
+5. `total` < 2.5 → **REJECT**
+6. `total` ≥ 3.5 **and** a stated ceiling **and** `fact_coverage` ≥ 0.5 **and** `unknown_rate` ≤ 0.3 → **DEEP_EXPLORE**
+7. Otherwise → **WATCH**
 
-Rule 5 is why coverage is decomposed and why magnitude is required: a high score built on thin evidence, or on an unstated payoff, stays at `WATCH`. Inference never substitutes for direct support.
+**Rule 2 was added after the first full recalculation.** idea_10 — whose niche is served by funded incumbents selling the same thing to the same buyer — scored `contestedness: 0` and therefore `0.00`, and still read `WATCH` because a different gate was unresolved. That understates it badly. `BLOCKED` routes to `WATCH` because it represents *ignorance*, and rejecting on ignorance is wrong; a scored zero is a *judgement* that the dimension is fatal, and resolving some other gate cannot rescue it.
+
+Rule 6 is why coverage is decomposed and why magnitude is required: a high score built on thin evidence, or on an unstated payoff, stays at `WATCH`. Inference never substitutes for direct support.
 
 ## RANKING
 

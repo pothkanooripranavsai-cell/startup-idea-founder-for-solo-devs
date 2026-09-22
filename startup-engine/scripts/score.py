@@ -255,6 +255,15 @@ def decide(
     if failed:
         return "REJECT", f"gate FAIL: {', '.join(failed)}"
 
+    # A zero on any scored dimension means the model cannot work, and that outranks an
+    # unresolved gate. BLOCKED routes to WATCH because it represents ignorance, and you
+    # should not reject on ignorance - but a scored zero is a judgement, not a gap.
+    # Without this, a candidate whose niche is fully served by funded incumbents scores
+    # 0.00 and still reads WATCH purely because some other gate is unresolved.
+    if total is not None and total == 0.0:
+        zeroed = [d for d, v in scores.items() if v == 0]
+        return "REJECT", f"dimension scored zero: {', '.join(zeroed)} - the model cannot work"
+
     blocked = [g for g, s in gates.items() if s == "BLOCKED"]
     if blocked:
         return "WATCH", f"gate BLOCKED: {', '.join(blocked)}"
