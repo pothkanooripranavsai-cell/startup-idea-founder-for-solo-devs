@@ -16,6 +16,7 @@ evaluator recorded.
 from __future__ import annotations
 
 import argparse
+import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -24,12 +25,12 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Mirrors rules/scoring_rubric.md.
 WEIGHTS: dict[str, float] = {
-    "bootstrap_feasibility": 0.25,
-    "domain_tacit_fit": 0.15,
-    "solo_feasibility": 0.15,
-    "economic_model": 0.25,
-    "validation_accessibility": 0.10,
+    "economic_model": 0.30,
+    "demand_evidence": 0.20,
+    "contestedness": 0.15,
+    "bootstrap_feasibility": 0.15,
     "distribution": 0.10,
+    "domain_tacit_fit": 0.10,
 }
 
 GATES = [
@@ -197,6 +198,42 @@ def coverage_from_claims(
     return direct / required, unknown / required, detail
 
 
+def weighted_total(scores: dict[str, Any]) -> float | None:
+    """Weighted geometric mean, on the 0-5 scale.
+
+    Deliberately multiplicative rather than additive. A weighted sum lets a strength
+    in one dimension average away a fatal weakness in another - a candidate whose
+    buyers are unreachable is worth nothing, not 10% less. Under a geometric mean a
+    zero in any dimension drives the total to zero, and weak dimensions drag
+    proportionally instead of being smoothed over.
+    """
+    if any(v is None for v in scores.values()):
+        return None
+    if any(v == 0 for v in scores.values()):
+        return 0.0
+    log_total = sum(WEIGHTS[d] * math.log(scores[d] / 5.0) for d in WEIGHTS)
+    return round(5.0 * math.exp(log_total), 2)
+
+
+def family_denominator(model_family: Any) -> tuple[Any, str]:
+    """Read the attempt denominator for a mechanism family.
+
+    Every source company in this corpus succeeded. Without knowing how many attempted
+    the same mechanism, a count of successes is survivor-selected and says little about
+    the odds. This surfaces that rather than letting revenue_evidenced_count read as proof.
+    """
+    if not model_family:
+        return None, "no model family recorded"
+    path = REPO_ROOT / "data" / "model_families" / f"{model_family}.md"
+    if not path.is_file():
+        return None, f"family record not found: {model_family}"
+    try:
+        fm = parse_frontmatter(path)
+    except ValueError:
+        return None, f"family record unparseable: {model_family}"
+    return fm.get("attempt_denominator"), str(fm.get("denominator_basis") or "not stated")
+
+
 def coverage_figures(cov: dict[str, Any]) -> tuple[float | None, float | None]:
     required = cov.get("required_claims")
     if not required:
@@ -212,6 +249,7 @@ def decide(
     total: float | None,
     fact_coverage: float | None,
     unknown_rate: float | None,
+    ceiling: Any = None,
 ) -> tuple[str, str]:
     failed = [g for g, s in gates.items() if s == "FAIL"]
     if failed:
@@ -230,6 +268,8 @@ def decide(
         return "REJECT", f"weighted total {total:.2f} below {REJECT_BELOW}"
 
     if total >= DEEP_EXPLORE_AT:
+        if ceiling is None:
+            return "WATCH", "magnitude unstated - no ceiling estimate to judge expected value against"
         if fact_coverage is None or unknown_rate is None:
             return "WATCH", "coverage not computable"
         if fact_coverage < FACT_COVERAGE_MIN:
@@ -283,14 +323,19 @@ def main() -> int:
     if args.idea:
         idea = parse_frontmatter(args.idea)
         cfg = parse_frontmatter(args.config)
+        # Gate 5 is deliberately no longer derived. The founder has stated that hours per
+        # week and number of founders are not concerns and that time will be adjusted
+        # later, so operating load is recorded for information and never blocks. Gate 1
+        # remains derived, because the zero-capital starting line is still absolute.
         computed = {
             "gate_1_validation_capital": derive_gate(
                 idea.get("cash_validation_cost"), cfg.get("validation_capital_ceiling")
             ),
-            "gate_5_solo_operability": derive_banded_gate(
-                idea.get("hours_per_week_est"), cfg.get("hours_per_week"), cfg.get("hours_per_week_stretch")
-            ),
         }
+        gates["gate_5_solo_operability"] = "PASS"
+        hours = idea.get("hours_per_week_est")
+        if hours is not None:
+            derived.append(f"gate_5 informational: operating load estimated at {hours} h/week, not blocking")
         for gate, state in computed.items():
             if state != gates[gate]:
                 derived.append(f"{gate}: evaluator said {gates[gate]}, computed {state}")
@@ -306,10 +351,10 @@ def main() -> int:
             print(f"error: {dim} must be an integer 0-5 or null, got {val!r}", file=sys.stderr)
             return 2
     scores = {d: scores.get(d) for d in WEIGHTS}
+    total = weighted_total(scores)
 
-    total = None
-    if all(v is not None for v in scores.values()):
-        total = round(sum(WEIGHTS[d] * scores[d] for d in WEIGHTS), 2)
+    ceiling = idea.get("ceiling_annual_revenue") if idea else None
+    denominator, denominator_basis = family_denominator(idea.get("model_family") if idea else None)
 
     claims = parse_claims(list(ev.get("claims") or []))
     detail = None
@@ -320,10 +365,19 @@ def main() -> int:
     else:
         fact_coverage, unknown_rate = coverage_figures(dict(ev.get("coverage") or {}))
         self_reported = None
-    verdict, reason = decide(gates, scores, total, fact_coverage, unknown_rate)
+    verdict, reason = decide(gates, scores, total, fact_coverage, unknown_rate, ceiling)
 
     print(f"idea:            {ev.get('idea')}")
-    print(f"weighted total:  {'n/a' if total is None else f'{total:.2f} / 5.00'}")
+    print(f"weighted total:  {'n/a' if total is None else f'{total:.2f} / 5.00'}  (geometric)")
+    if ceiling is None:
+        print("ceiling:         UNSTATED — magnitude is required to judge expected value")
+    else:
+        print(f"ceiling:         {ceiling:,} / year (estimate)" if isinstance(ceiling, (int, float)) else f"ceiling:         {ceiling}")
+    if denominator in (None, "UNKNOWN", "unknown"):
+        print(f"survivorship:    attempt denominator UNKNOWN — {denominator_basis}")
+        print("                 successes are survivor-selected; this is not a probability")
+    else:
+        print(f"survivorship:    {denominator} known attempts — {denominator_basis}")
     print(f"fact coverage:   {'n/a' if fact_coverage is None else f'{fact_coverage:.0%}'}")
     print(f"unknown rate:    {'n/a' if unknown_rate is None else f'{unknown_rate:.0%}'}")
     if detail:

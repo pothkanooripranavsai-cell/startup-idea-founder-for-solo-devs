@@ -13,6 +13,8 @@ domain_expertise_required: UNKNOWN
 network_required: UNKNOWN
 known_regions: [US, EU, India]
 target_market_presence: proven
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_002, ev_003]
 ---

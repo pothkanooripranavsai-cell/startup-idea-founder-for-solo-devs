@@ -23,6 +23,10 @@ Markdown with YAML frontmatter. Frontmatter holds machine-readable fields; the b
 | `hours_per_week_est` | number \| null | yes | Estimated operating load through validation. `null` → Gate 5 BLOCKED. |
 | `assumptions` | list | yes | Things taken as true without evidence. Required by generator.md. |
 | `unknowns` | list | yes | Things not known and not assumed. Feeds the evaluator's gate states. |
+| `ceiling_annual_revenue` | number | yes | Plausible annual revenue ceiling in USD. Required - a candidate without one cannot reach DEEP_EXPLORE, because expected value needs a payoff term and "a ceiling worth chasing" is a word, not a number. |
+| `ceiling_basis` | string | yes | How the figure was derived, citing the source company's disclosed revenue where one exists. |
+| `revenue_horizon` | string | no | When first revenue is expected. Required in practice for any candidate claiming the long-horizon exception. |
+| `interim_signals` | list | no | Specific checkable things that should be observably true at months two, four and eight. Required to claim the long-horizon exception in `rules/scoring_rubric.md`; without them a long wait scores 1. |
 | `created` | date | yes | Generation date. |
 
 ## BODY

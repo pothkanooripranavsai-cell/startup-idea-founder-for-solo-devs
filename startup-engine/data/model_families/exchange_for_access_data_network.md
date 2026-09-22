@@ -13,6 +13,8 @@ domain_expertise_required: Low to start. The founders of the evidenced instance 
 network_required: None. This is the mechanism's defining property - the first contributors are strangers who want the aggregate more than they value withholding their own piece of it.
 known_regions: [not_applicable]
 target_market_presence: not_applicable
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_026, ev_027]
 ---

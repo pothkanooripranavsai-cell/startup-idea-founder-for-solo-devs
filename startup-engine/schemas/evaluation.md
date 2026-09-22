@@ -11,7 +11,7 @@ Markdown with YAML frontmatter. `scripts/score.py` reads the frontmatter and rec
 | `idea` | string | yes | `id` of the evaluated idea. |
 | `evaluated` | date | yes | Evaluation date. |
 | `gates` | map | yes | One entry per gate in `rules/hard_gates.md`, each `PASS`, `FAIL`, or `BLOCKED`. |
-| `scores` | map | yes | One entry per dimension in `rules/scoring_rubric.md`, integer `0`–`5` or `null` when unresolved. |
+| `scores` | map | yes | One entry per dimension in `rules/scoring_rubric.md`, integer `0`–`5` or `null` when unresolved. The six dimensions are `economic_model`, `demand_evidence`, `contestedness`, `bootstrap_feasibility`, `distribution`, `domain_tacit_fit`. `solo_feasibility` was removed and `validation_accessibility` merged into bootstrap feasibility. The total is a weighted **geometric** mean, so any dimension at `0` drives it to `0`. |
 | `claims` | list | yes | One entry per required claim, naming the evidence behind it. The script derives all coverage figures from this. See below. |
 | `coverage` | map | legacy | The four hand-entered counts. Superseded by `claims`; retained so older evaluations still parse. Where both exist, `claims` governs and the script prints the discrepancy. |
 | `critical_unknown` | string \| null | yes | The single unknown that most constrains the decision. `null` only when nothing is unresolved. |

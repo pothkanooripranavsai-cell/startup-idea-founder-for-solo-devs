@@ -48,3 +48,14 @@ Flattening distinct operators into one generic category destroys exactly the inf
 3. `## How instances differ` — one paragraph per differentiating axis.
 4. `## Requirements` — capital, expertise, network, regulatory exposure.
 5. `## Open questions` — what is UNKNOWN about this family.
+
+## SURVIVORSHIP FIELDS
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `attempt_denominator` | number \| `UNKNOWN` | yes | How many operators are known to have *attempted* this mechanism, successes and failures together. |
+| `denominator_basis` | string | yes | How it was established, or why it could not be. |
+
+Every source company in this corpus is one that survived. A count of successes without a denominator is survivor-selected and says little about the odds of a new attempt. `scripts/score.py` prints this on every run and states plainly when it is `UNKNOWN`, rather than letting `revenue_evidenced_count` read as proof of good odds.
+
+Expect `UNKNOWN` to be the honest answer in most cases. Record it as such rather than leaving the field off.

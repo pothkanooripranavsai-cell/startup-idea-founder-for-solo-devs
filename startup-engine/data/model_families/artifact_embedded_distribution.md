@@ -13,6 +13,8 @@ domain_expertise_required: Low. The skill is designing an artifact people want t
 network_required: None to start. The entire point of the mechanism is that it does not require the operator to already have an audience.
 known_regions: [not_applicable]
 target_market_presence: not_applicable
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_024, ev_025]
 ---

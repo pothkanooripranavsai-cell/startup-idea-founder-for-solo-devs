@@ -70,11 +70,17 @@ Do not reason about a specific country. Ask whether the *activity itself* is a r
 
 At a zero ceiling, any registration carrying a fee also fails Gate 1.
 
-## GATE 5: SOLO OPERABILITY
+## GATE 5: OPERATING LOAD (informational, never blocking)
 
 `gate_5_solo_operability`
 
-Can one person operate the adaptation through validation?
+**This gate no longer blocks.** The founder has stated that hours per week and number of founders are not concerns and that time will be adjusted later. Record the estimate for information; never FAIL or BLOCK a candidate on it.
+
+Previously this gate killed idea_09 and idea_15 on an hours band. Both should be re-examined, since the constraint that killed them no longer exists.
+
+What the estimate is still worth recording: an operating load far beyond one person's capacity is a signal about the *economics* - it usually means the model trades time for money linearly, which `economic_model` should already be catching.
+
+Historical question, retained for context: can one person operate the adaptation through validation?
 
 * FAIL if the model requires a team, shifts, or parallel roles before revenue.
 * BLOCKED if the operational load is unknown, or if the founder's available hours are unset.

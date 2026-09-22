@@ -13,6 +13,8 @@ domain_expertise_required: Low. Knowing which fields a buyer filters on requires
 network_required: None. This is the mechanism's defining property and the reason it was separated from niche_listing_board.
 known_regions: [not_applicable]
 target_market_presence: not_applicable
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_016, ev_017, ev_018, ev_022]
 ---

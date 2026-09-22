@@ -13,6 +13,8 @@ domain_expertise_required: Depends on the outcome sold, not on the signal
 network_required: None for finding buyers, which is the mechanism's defining property
 known_regions: [not_applicable]
 target_market_presence: not_applicable
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_012, ev_013, ev_014]
 ---

@@ -15,6 +15,8 @@ domain_expertise_required: UNKNOWN - no evidence on what the operators knew abou
 network_required: UNKNOWN - and this is the central open question, since a board with no audience has nothing to sell
 known_regions: [not_applicable]
 target_market_presence: not_applicable
+attempt_denominator: UNKNOWN
+denominator_basis: Not established. Every instance on file is one that survived; no source records how many operators attempted this mechanism and failed, so the success count here is survivor-selected and is not evidence about odds.
 known_failures: []
 evidence: [ev_007, ev_008, ev_009, ev_016]
 ---
