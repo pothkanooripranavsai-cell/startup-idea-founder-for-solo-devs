@@ -24,10 +24,12 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Mirrors rules/scoring_rubric.md.
+# Run 09: product-market fit is the single primary goal, so demand evidence carries the
+# most weight and competition the least. See rules/scoring_rubric.md for the reasoning.
 WEIGHTS: dict[str, float] = {
-    "economic_model": 0.30,
-    "demand_evidence": 0.20,
-    "contestedness": 0.15,
+    "economic_model": 0.25,
+    "demand_evidence": 0.35,
+    "contestedness": 0.05,
     "bootstrap_feasibility": 0.15,
     "distribution": 0.10,
     "domain_tacit_fit": 0.10,
@@ -429,6 +431,13 @@ def main() -> int:
         print(f"critical unknown: {ev['critical_unknown']}")
     for note in derived:
         print(f"! deterministic override: {note}")
+
+    recorded_verdict, recorded_total = ev.get("verdict"), ev.get("weighted_total")
+    if recorded_verdict not in (None, verdict) or (
+        isinstance(recorded_total, (int, float)) and total is not None and abs(recorded_total - total) > 0.005
+    ):
+        print(f"! file recorded {recorded_verdict} / {recorded_total}; computed {verdict} / "
+              f"{'n/a' if total is None else f'{total:.2f}'} - the computed values govern")
 
     if args.write:
         write_back(args.evaluation, verdict, total)

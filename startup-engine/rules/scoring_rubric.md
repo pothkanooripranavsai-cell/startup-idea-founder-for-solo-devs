@@ -8,18 +8,26 @@ Keep this file and `scripts/score.py` in sync. The script asserts the weights su
 
 The founder's requirement, stated by them: **something with good product-market fit, startable now, with little money, on their own.** Best economic model wins. Time per week and number of founders are explicitly not concerns.
 
-So the rubric asks one question — **is this worth betting on?** — and it answers it by weighting demand and economics above everything else. Half the total weight sits on `economic_model` and `demand_evidence` together.
+So the rubric asks one question — **is this worth betting on?** — and it answers it by weighting demand and economics above everything else. Sixty percent of the total weight sits on `demand_evidence` and `economic_model` together.
+
+### Run 09: product-market fit is the single primary goal
+
+The founder set it for run 09: product-market fit first, worry less about competition. `demand_evidence` - direct proof that buyers in this niche pay - became the heaviest dimension at 35 percent, and `contestedness` fell from 15 to 5 percent. `economic_model` moved from 30 to 25 percent.
+
+What this does and does not do, stated plainly. It lifts candidates with proven demand in crowded markets and lowers candidates in open ground with unproven demand, **with no new evidence either way** - the before and after for all earlier candidates is in the run 09 record. Competition still counts: a crowded market still costs points, and a contestedness of 0, meaning funded incumbents sell the exact product to the exact buyer, still zeroes the total under the geometric mean. The weight change says a proven market is worth more than an empty one; it does not say competitors are harmless.
 
 ## WEIGHTS
 
 | Dimension | Weight |
 |---|---|
-| Economic model | 30% |
-| Demand evidence | 20% |
-| Contestedness | 15% |
+| Demand evidence | 35% |
+| Economic model | 25% |
 | Bootstrap feasibility | 15% |
 | Distribution | 10% |
 | Domain / tacit fit | 10% |
+| Contestedness | 5% |
+
+Previous weights, used from 22 Sep through run 08: economic model 30, demand evidence 20, contestedness 15, bootstrap 15, distribution 10, domain fit 10.
 
 **Removed:** `solo_feasibility` — the founder will adjust hours later, so capacity is no longer decision-relevant. **Merged:** `validation_accessibility` folded into `bootstrap_feasibility`; they moved together in every rescoring because both were measuring time-to-feedback, and summing them double-counted one construct.
 
@@ -35,9 +43,9 @@ The scale is preserved at the ends — straight 5s give 5.00, straight 3s give 3
 
 The 2.5 and 3.5 thresholds keep their previous values. They were invented and they remain invented. Because the geometric mean shifts the distribution slightly downward, they are now *relatively* stricter than before — noted here rather than silently retuned.
 
-## ECONOMIC MODEL (30%)
+## ECONOMIC MODEL (25%)
 
-**The heaviest dimension. Is this economic model worth betting on?**
+**Second-heaviest since run 09. Is this economic model worth betting on?**
 
 Margin, ceiling, defensibility. Not team size at the source — a mechanism that worked for two founders and one that worked for one are the same mechanism.
 
@@ -56,7 +64,9 @@ A team, outside investment, and scaling capital of any kind are all available la
 
 Where margin, pricing and ceiling evidence are all absent, this dimension is `null`.
 
-## DEMAND EVIDENCE (20%)
+## DEMAND EVIDENCE (35%)
+
+**The heaviest dimension since run 09 - this is the product-market-fit measure.**
 
 **Is there direct proof that buyers in this specific niche pay for this specific thing, at a price that works?**
 
@@ -71,7 +81,7 @@ This dimension exists because the engine used to infer demand from "the mechanis
 
 Complaints, upvotes and survey intent are not demand. **Someone paying is demand.** Where nothing distinguishes wanting from paying, score no higher than 2.
 
-## CONTESTEDNESS (15%)
+## CONTESTEDNESS (5%)
 
 **How crowded and defended is this niche right now?**
 
