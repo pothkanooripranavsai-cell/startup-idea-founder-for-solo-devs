@@ -80,15 +80,13 @@ The founder is explicit about this: waiting longer is fine in exchange for a big
 
 So a candidate on a long horizon must name **specific, checkable interim signals** — what should be observably true at month two, month four, month eight. Contributions accumulating at a stated rate. Usage compounding. A dataset approaching a threshold estimated to unlock revenue.
 
-A candidate that names them earns relief on Bootstrap feasibility and Validation accessibility per `rules/scoring_rubric.md`. A candidate that asks for a year on faith does not.
+A candidate that names them earns relief on Bootstrap feasibility (which absorbed the former Validation accessibility) per `rules/scoring_rubric.md`. A candidate that asks for a year on faith does not.
 
 ## HOURS
 
-`hours_per_week` is **20**, the committed floor. `hours_per_week_stretch` is **30**, reachable but not committed.
+`hours_per_week` is **20** and `hours_per_week_stretch` is **30**, recorded for information only.
 
-Gate 5 treats the band honestly: at or below 20 passes; 21–30 is BLOCKED because the capacity is real but uncommitted; above 30 fails.
-
-Future capacity from holidays or other people joining is post-revenue capacity and must never pass a validation-stage gate.
+Hours are not a constraint. The founder has stated that hours per week and number of founders are not concerns and that time will be adjusted later, so Gate 5 never blocks or fails - see `rules/hard_gates.md`. An operating load far beyond one person's capacity is read as a signal about the economics, usually a model that trades time for money linearly, and belongs in `economic_model`.
 
 ## EXPERTISE AND NETWORK
 
