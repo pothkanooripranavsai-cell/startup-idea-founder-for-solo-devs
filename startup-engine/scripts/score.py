@@ -55,6 +55,12 @@ UNKNOWN_RATE_MAX = 0.3
 # fall back to inference. Without a cap, one article can establish a whole candidate.
 MAX_CLAIMS_PER_SOURCE = 2
 
+# A direct claim counts only if at least one cited record is a FACT from one of these
+# tiers. rules/evidence_policy.md already says community sources cannot alone support a
+# FACT and promotional sources never solely support viability; until run 08 nothing
+# enforced it, and six direct claims across four candidates rested on such records.
+QUALIFYING_TIERS = {"primary", "secondary"}
+
 
 def _scalar(raw: str) -> Any:
     s = raw.strip()
@@ -132,23 +138,27 @@ def derive_banded_gate(value: Any, floor: Any, stretch: Any) -> str:
     return "FAIL"
 
 
-def underlying_sources(evidence_dir: Path) -> dict[str, str]:
-    """Map evidence id -> underlying_source, so independence is enforced rather than remembered."""
-    out: dict[str, str] = {}
+def evidence_index(evidence_dir: Path) -> dict[str, dict[str, str | None]]:
+    """Map evidence id -> underlying source, classification and tier, read from the records
+    themselves so independence and quality are enforced rather than remembered."""
+    out: dict[str, dict[str, str | None]] = {}
     if not evidence_dir.is_dir():
         return out
+    wanted = {"id", "underlying_source", "classification", "source_tier"}
     for path in sorted(evidence_dir.glob("ev_*.md")):
-        ident = source = None
+        rec: dict[str, str] = {}
         for line in path.read_text(encoding="utf-8").splitlines():
             key, _, value = line.partition(":")
-            if key.strip() == "id":
-                ident = value.strip()
-            elif key.strip() == "underlying_source":
-                source = value.strip()
-            elif line.strip() == "---" and ident:
+            if key.strip() in wanted:
+                rec[key.strip()] = value.strip()
+            elif line.strip() == "---" and "id" in rec:
                 break
-        if ident:
-            out[ident] = source or ident
+        if "id" in rec:
+            out[rec["id"]] = {
+                "source": rec.get("underlying_source") or rec["id"],
+                "classification": rec.get("classification"),
+                "tier": rec.get("source_tier"),
+            }
     return out
 
 
@@ -164,25 +174,34 @@ def parse_claims(raw: list[Any]) -> list[tuple[str, list[str]]]:
 
 
 def coverage_from_claims(
-    claims: list[tuple[str, list[str]]], sources: dict[str, str]
+    claims: list[tuple[str, list[str]]], index: dict[str, dict[str, str | None]]
 ) -> tuple[float, float, dict[str, Any]]:
-    """Derive coverage from the claim list, capping how much one underlying source may carry.
+    """Derive coverage from the claim list.
 
-    A single article establishing an entire candidate is the failure this prevents. Each
-    distinct underlying source counts toward direct support at most MAX_CLAIMS_PER_SOURCE
-    times; further claims from it fall back to inference.
+    Two rules turn a claim written as direct back into inference. It must cite at least one
+    record that is a FACT at a qualifying tier, or it is demoted. And each distinct
+    underlying source counts toward direct support at most MAX_CLAIMS_PER_SOURCE times,
+    because a single article establishing an entire candidate is the failure the
+    independence rule exists to prevent.
     """
     required = len(claims)
     unknown = sum(1 for support, _ in claims if support == "unknown")
 
     used: dict[str, int] = {}
-    direct = uncapped = 0
+    direct = uncapped = demoted = 0
     for support, ids in claims:
         if support != "direct":
             continue
         uncapped += 1
-        keys = {sources.get(i, i) for i in ids} or {"unattributed"}
-        key = sorted(keys)[0]
+        qualifying = [
+            i for i in ids
+            if index.get(i, {}).get("classification") == "FACT"
+            and index.get(i, {}).get("tier") in QUALIFYING_TIERS
+        ]
+        if not qualifying:
+            demoted += 1
+            continue
+        key = sorted({index[i]["source"] for i in qualifying})[0]
         if used.get(key, 0) < MAX_CLAIMS_PER_SOURCE:
             used[key] = used.get(key, 0) + 1
             direct += 1
@@ -193,7 +212,8 @@ def coverage_from_claims(
         "direct_uncapped": uncapped,
         "unknown": unknown,
         "independent_sources": len(used),
-        "capped_away": uncapped - direct,
+        "demoted": demoted,
+        "capped_away": uncapped - demoted - direct,
     }
     return direct / required, unknown / required, detail
 
@@ -368,8 +388,8 @@ def main() -> int:
     claims = parse_claims(list(ev.get("claims") or []))
     detail = None
     if claims:
-        sources = underlying_sources(args.evaluation.parents[2] / "data" / "evidence")
-        fact_coverage, unknown_rate, detail = coverage_from_claims(claims, sources)
+        index = evidence_index(args.evaluation.parents[2] / "data" / "evidence")
+        fact_coverage, unknown_rate, detail = coverage_from_claims(claims, index)
         self_reported = coverage_figures(dict(ev.get("coverage") or {}))[0]
     else:
         fact_coverage, unknown_rate = coverage_figures(dict(ev.get("coverage") or {}))
@@ -392,8 +412,9 @@ def main() -> int:
     if detail:
         print(
             f"  derived from:  {detail['required']} claims, "
-            f"{detail['direct_uncapped']} direct across {detail['independent_sources']} "
-            f"independent sources, {detail['capped_away']} capped away"
+            f"{detail['direct_uncapped']} written as direct, {detail['direct_capped']} counted across "
+            f"{detail['independent_sources']} independent sources, {detail['demoted']} demoted "
+            f"(no FACT at primary or secondary tier), {detail['capped_away']} capped away"
         )
         if self_reported is not None and abs(self_reported - fact_coverage) > 0.005:
             print(

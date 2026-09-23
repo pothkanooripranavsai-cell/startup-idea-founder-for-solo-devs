@@ -92,7 +92,7 @@ The evaluator can still write a claim list generously. It can no longer decide h
 Required sections, in order:
 
 1. `## Gates` — one subsection per gate: state, reason, and the evidence ids it rests on. Reasons are required for `PASS` as well as `FAIL` and `BLOCKED`.
-2. `## Scores` — one subsection per dimension: the 0–5 anchor chosen, why, and supporting evidence ids.
+2. `## Scores` — one subsection per dimension: the 0–5 anchor chosen, quoted; why; **why not one higher**; and supporting evidence ids. The rebuild in run 07 changed numbers without text and left 65 percent of the weight unexplained in every file, which is why the reason is now required alongside the number.
 3. `## Evidence coverage` — what the required claims were, and which are unsupported.
 4. `## Disconfirming search` — what was looked for that would contradict the candidate, and what was found.
 5. `## Critical unknown` — the one unknown that most constrains the decision, and what would resolve it.

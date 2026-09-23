@@ -27,6 +27,9 @@ Markdown with YAML frontmatter. Frontmatter holds machine-readable fields; the b
 | `ceiling_basis` | string | yes | How the figure was derived, citing the source company's disclosed revenue where one exists. |
 | `revenue_horizon` | string | no | When first revenue is expected. Required in practice for any candidate claiming the long-horizon exception. |
 | `interim_signals` | list | no | Specific checkable things that should be observably true at months two, four and eight. Required to claim the long-horizon exception in `rules/scoring_rubric.md`; without them a long wait scores 1. |
+| `beachhead` | string | yes, from run 08 | The narrow first segment, and why it pays early. |
+| `expansion_path` | list | yes, from run 08 | Ordered steps out of the beachhead into adjacent segments, each reusing what the previous step built. |
+| `expansion_evidence` | string | yes, from run 08 | A real company that made the same expansion, with the evidence id. Like magnitude, the expansion path is reported alongside the score, never folded into it, because `economic_model` already judges the ceiling. |
 | `created` | date | yes | Generation date. |
 
 ## BODY

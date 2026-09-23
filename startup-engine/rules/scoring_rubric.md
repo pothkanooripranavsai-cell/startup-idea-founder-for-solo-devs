@@ -86,6 +86,12 @@ Previously this surfaced only by accident, when a disconfirming search happened 
 
 Score the niche **as it is now**, not as it was when the source company entered. A mechanism that worked in 2017 in an empty field may be entering a full one today.
 
+### A seam must be checked, not asserted (added in run 08)
+
+A score of **2 or higher** requires the evaluator to name the seam and to record in `disconfirming_search` a search for anyone already occupying it — including competitors' own placed articles and pricing pages, not just the first competitor found. A seam asserted without that search scores 1.
+
+Added because run 07's `idea_23` checked one competitor, treated its proposed wedge as open, and scored 0.35 too high until deep research found the wedge already sold. Before run 08, 14 of 25 candidates sat at exactly 2, mostly without such a search. The rule applies to every evaluation from run 08 on, and was re-applied to the four earlier candidates scored 3 or 4; the older 2s are flagged as unchecked rather than silently kept or silently cut.
+
 ## BOOTSTRAP FEASIBILITY (15%)
 
 How far from revenue, and how fast does feedback arrive? This dimension absorbed the former `validation_accessibility`.
